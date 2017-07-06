@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Themes extends CI_Controller {
+class Addons extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -20,19 +20,20 @@ class Themes extends CI_Controller {
 	 */
 	public function index()
 	{
-		$d['v'] = 'themes';
-		$this->load->model('Themes_M');
-		$d['list'] = $this->Themes_M->allThemes();
+		$d['v'] = 'addons';
+		$this->load->model('Addons_M');
+		$d['list'] = $this->Addons_M->allAddons();
 		$this->load->view('template', $d);
 	}
 	
 	
 	
-	public function buynow() {
-	    $theme_id = $this->input->get('p');
+	public function buynow()
+	{
+	
+					
+		$theme_id = $this->input->get('p');
 		$this->load->model('Themes_M');
-		$this->load->model('Customer_M');
-		$this->Customer_M->temp_data($this->input->get());
 		$theme = $this->Themes_M->single_plan($theme_id);
 		$this->session->set_userdata(array(
                             'theme'       => $theme->theme_name,
@@ -46,32 +47,16 @@ class Themes extends CI_Controller {
 	}
 	
 	public function addons()
-	{    
-	    $d['v'] = 'addons';
-		$this->load->model('Addons_M');
-		$d['list'] = $this->Addons_M->allAddons();
+	{
+		$d['v'] = 'addons';
 		$this->load->view('template', $d);
 	}
 	
 	public function add_continue()
 	{
 		$addons_items = $this->input->post('addons_items');
-		$this->load->model('Customer_M');
-		$this->Customer_M->temp_data($this->input->post());
-		$this->load->model('Addons_M');
-		
-		$addons_id="";
-		foreach($addons_items as $addon) {
-			$addons_id .= $addon.",";
-			$list = $this->Addons_M->single_addon($addon);
-			
-			$addons_item[]= $list;
-			
-		}
-		
 		$this->session->set_userdata(array(
-                            'addons'  => $addons_item,
-							'addons_id' =>$addons_id 
+                            'addons'  => $addons_items
                     ));
 		redirect('cart');
 	}

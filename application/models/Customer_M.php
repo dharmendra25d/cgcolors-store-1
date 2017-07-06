@@ -41,6 +41,22 @@ Class Customer_M extends CI_Model {
 
 	}
 	
+	public function temp_data($info) {
+
+	/* $this->db->select('address_id');
+	$query = $this->db->get_where($this->table, array("invoice_id"=>$info['id']));
+	$aid = ($query->row()->address_id); */
+	$tdata['data']=serialize($info);
+	if(!empty($this->session->userdata('email'))) {
+		$tdata['email']=$this->session->userdata('email');
+	}
+	$tdata['page_url']=current_url();
+	$this->db->insert('temp_data',$tdata);
+		
+	return true;
+
+	}
+	
 	
 	function mail_exists($key)
 {
@@ -79,14 +95,14 @@ Class Customer_M extends CI_Model {
 
 	}
 	
-	public function single_plan($id) {
+	public function userby_email($email) {
 
 	$this->db->select('*');
-	$this->db->where('id',$id);
+	$this->db->where('email',$email);
 	$query = $this->db->get($this->table);
-	$plans = ($query->row());
+	$user = ($query->row());
 	
-	return $plans;
+	return $user;
 
 	}
 	

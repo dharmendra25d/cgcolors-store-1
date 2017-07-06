@@ -26,8 +26,15 @@
 	<div class="twoInput"><label><input name="city"  value="<?php echo set_value('city'); ?>" type="text" placeholder="City" /></label>
 	<label><input name="zip_code" type="text"  value="<?php echo set_value('zip_code'); ?>" placeholder="Zip Code" /></label></div>
 	
-	<div class="twoInput"><label><input name="country"  value="<?php echo set_value('country'); ?>" type="text" placeholder="Country" /></label>
-	<label><input name="state" type="text"  value="<?php echo set_value('state'); ?>"  placeholder="State" /></label></div>
+	<div class="twoInput"><label><select name="country" class="form-control countries" id="countryId" >
+<option value="">Select Country</option>
+<?php foreach($countries as $country) { ?>
+<option value="<?php echo $country->id;?>"><?php echo $country->name;?></option>
+<?php } ?>
+</select></label>
+	<label> <select name="state" class="form-control countries" id="stateId" >
+<option value="">Select State</option>
+</select></label></div>
 	
 	<label><input type="text" name="phone"  value="<?php echo set_value('phone'); ?>" placeholder="Mobile Number" /></label>
 	<div class="twoInput"><label><input name="password" type="password" placeholder="Password" /></label>
@@ -43,4 +50,21 @@
  </section>
  
 </div>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>   
+ <script>	
+  $('#countryId').change(function () {
+	var base_url="<?php echo base_url();?>";
+	var country_id= $(this).val();
+    $.ajax({
+      url: base_url+"ajaxdata/stateList",
+      async: false,
+      type: "POST",
+      data: "id=" + country_id,
+      dataType: "html",
+      success: function(data) {
+        $('#stateId').html(data);
+      }
+    })
+  });
+ </script>
 <?php //include('footer.php'); ?>

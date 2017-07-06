@@ -17,72 +17,15 @@
   </div>
   <div class="containerFIx-80">
    <ul>
-    <li><span class="email"></span>
-	<h4>Communications Kit</h4>
-	<em>A $500 value</em>
-	<p>Our standard feedback form or contact form &amp; thank you page give you more opportunities to communicate with customers.</p>
-	<label><input type="checkbox" name="addons_items[]" value="1">Add This Feature</label>
+  <?php foreach($list as $addon) { ?> 
+    <li><p><img src="<?php echo $addon->addon_image_link;?>" /></p>
+	<h4><?php echo $addon->addon_name;?></h4>
+	<em><?php echo $addon->addon_price;?> </em>
+	<p><?php echo $addon->addon_desc;?></p>
+	<label><input type="checkbox" name="addons_items[]" value="<?php echo $addon->id;?>">Add This Feature</label>
 	</li>
-	<li><span class="popup-window"></span>
-	<h4>Pop-Up Window</h4>
-	<em>A $500 value</em>
-	<p>An automatically appearing newsletter subscription form, age verification or promotional alert on your website.</p>
-	<label><input type="checkbox" name="addons_items[]" value="2">Add This Feature</label>
-	</li>
-	<li><span class="social-media-kit"></span>
-	<h4>Social Media Kit</h4>
-	<em>A $500 value</em>
-	<p>Let our Design Team start your social marketing out on the right foot with a cohesive look across your networks.</p>
-	<label><input type="checkbox">Add This Feature</label>
-	</li>
-	<li class="noBG"><span class="store-locator-map"></span>
-	<h4>Store Locator Map</h4>
-	<em>A $500 value</em>
-	<p>OHave multiple brick-and-mortar locations or resellers? A store locator map is a great way for customers to find all your locations.</p>
-	<label><input type="checkbox">Add This Feature</label>
-	</li>
-	<li><span class="graphic-5-pack"></span>
-	<h4>Graphic 5 Pack</h4>
-	<em>A $500 value</em>
-	<p>Receive five individual graphic designs to be used for slide images, category graphics, social media or anything else needed for your business.</p>
-	<label><input type="checkbox">Add This Feature</label>
-	</li>
-	<li><span class="technicalseo"></span>
-	<h4>Technical SEO</h4>
-	<em>A $500 value</em>
-	<p>Ensure your website is structured for search engine crawlability! Our in-house SEO experts will optimize your website for technical performance.</p>
-	<label><input type="checkbox">Add This Feature</label>
-	</li>
-	<li><span class="newsletter-design"></span>
-	<h4>Newsletter Design</h4>
-	<em>A $500 value</em>
-	<p>Use email marketing to reach your customer base with a custom design to be used with Volusionâ€&trade;s newsletter feature and/or MailChimp.</p>
-	<label><input type="checkbox">Add This Feature</label>
-	</li>
-	<li class="noBG"><span class="blogger-template"></span>
-	<h4>Blogger Template</h4>
-	<em>A $500 value</em>
-	<p>Extend your brand across channels with a custom blog design thatâ€&trade;s consistent with the appearance of your store.</p>
-	<label><input type="checkbox">Add This Feature</label>
-	</li>
-	<li class="noBG border-bottom-none"><span class="featured-product-scroll"></span>
-	<h4>Featured Product Scroll</h4>
-	<em>A $500 value</em>
-	<p>The featured product scroll allows you to insert products into a scroller to allow merchants easy browsing.</p>
-	<label><input type="checkbox">Add This Feature</label>
-	</li>
-	<li class="noBG border-bottom-none"><span class="quickview"></span>
-	<h4>Quickview</h4>
-	<em>A $500 value</em>
-	<p>Allow customers to view individual product information directly on the category page.</p>
-	<label><input type="checkbox">Add This Feature</label>
-	</li>
-	<li class="noBG border-bottom-none"><span class="mega-menu"></span>
-	<h4>Mega Menu</h4>
-	<em>A $500 value</em>
-	<p>Our standard mega menu enables more direct access to product categories and sub-categories.</p>
-	<label><input type="checkbox">Add This Feature</label>
-	</li>
+   <?php } ?>
+	
    </ul>
   </div>
   <div class="containerFIx-80">

@@ -103,41 +103,39 @@ if ($params['testmode'] == "on") {
 <div class="customerInformation">
  <form class="checoutForm" action="<?php echo base_url();?>checkout/c_submit" method="post">
   <h3>Customer information</h3>
-  <div class="marginArearight"><label class="Area100"><input type="email" name="email" value="Email" placeholder="Email" /></label></div>
+  <div class="marginArearight"><label class="Area100"><input type="email" name="email" value="<?php echo $user->email;?>" placeholder="Email" /></label></div>
   <label><input type="checkbox" /> Subscribe to our newsletter</label>
   <h3>Shipping address</h3>
   <div class="marginArearight">
-   <label class="halfArea"><input type="text" name="first_name" placeholder="First Name" /></label>
-   <label class="halfArea"><input type="text" name="last_name" placeholder="Last Name" /></label>
+   <label class="halfArea"><input type="text" name="first_name" value="<?php if(!empty($user->fname)) echo $user->fname; else echo "First Name";?>" placeholder="First Name" /></label>
+   <label class="halfArea"><input type="text" name="last_name" value="<?php if(!empty($user->lname)) echo $user->lname; else echo "Lirst Name";?>" placeholder="Last Name" /></label>
   </div>
   <div class="marginArearight">
-   <label class="halfArea Area70"><input type="text" name="address" placeholder="Address" /></label>
-   <label class="halfArea Area31"><input type="text" name="address1" placeholder="Apt, suite, etc. (optional)" /></label>
+   <label class="halfArea Area70"><input type="text" name="address" value="<?php if(!empty($user->address)) echo $user->address; ?>" placeholder="Address" /></label>
+   <label class="halfArea Area31"><input type="text" name="street_address" value="<?php if(!empty($user->street_address)); echo $user->street_address;?>" placeholder="Apt, suite, etc. (optional)" /></label>
   </div>
-  <div class="marginArearight"><label class="Area100"><input type="text" name="city" value="City" placeholder="City" /></label></div>
+  <div class="marginArearight"><label class="Area100"><input type="text" name="city" value="<?php if(!empty($user->city)) echo $user->city; else echo "City";?>" placeholder="City" /></label></div>
   <div class="marginArearight">
   <label class="halfArea Area32">
-   <select name="country">
-    <option>A</option>
-	<option>B</option>
-	<option>C</option>
-	<option>D</option>
+   <select id="countryId"  name="country">
+   <option value="">Select Country</option>
+<?php foreach($countries as $country) { ?>
+<option <?php if($user->country==$country->id) echo "selected";?> value="<?php echo $country->id;?>"><?php echo $country->name;?></option>
+<?php } ?>
    </select>
   </label>
     <label class="halfArea Area32">
-   <select name="state">
-    <option>A</option>
-	<option>B</option>
-	<option>C</option>
-	<option>D</option>
+   <select id="stateId" name="state">
+    <option value=""><?php if(!empty($user->state)) echo (getstatebyid($user->state)); else echo "Select state";?></option>
    </select>
   </label>
     <label class="halfArea Area32">
-   <input type="text" name="zipcode" value="Pincode" placeholder="Pincode" /></label>
+   <input type="text" name="zipcode" value="<?php if(!empty($user->zip_code)) echo $user->zip_code; else echo "Zip Code";?>" placeholder="Zip Code" /></label>
  </div>
-  <div class="marginArearight"><label class="halfArea Area100"><input type="text" name="phone" value="Phone" placeholder="Phone" /></label></div>
-<input type="hidden" name="total" value="<?php echo $this->session->userdata('plan_price'); ?>" />
-  <label style="margin:10px 0 0 0;"><input type="checkbox" name="save_info" /> Save this information for next time</label>
+  <div class="marginArearight"><label class="halfArea Area100"><input type="text" name="phone" value="<?php if(!empty($user->phone)) echo $user->phone; ?>" placeholder="Phone" /></label></div>
+<?php if(empty($this->session->userdata('theme')) && empty($this->session->userdata('addons'))) {  
+?>
+  <input type="hidden" name="total" value="<?php echo $this->session->userdata('plan_price'); ?>" />
   <div class="marginArearight m-20">
   <script
     src="https://checkout.stripe.com/checkout.js" class="stripe-button"
@@ -147,10 +145,25 @@ if ($params['testmode'] == "on") {
     data-image="http://designomate.com/coming-soon-logo.png"
     data-locale="auto"
 	data-description="<?php echo $this->session->userdata('plan_name'); ?>"
-  data-panel-label="Subscribe"
-  data-label="Subscribe"
+	data-panel-label="Subscribe"
+	data-label="Subscribe"
     data-zip-code="true">
   </script>
+<?php } else { ?>
+ <input type="hidden" name="total" value="<?php echo $this->session->userdata('plan_price'); ?>" />
+  <div class="marginArearight m-20">
+  <script
+    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    data-key="<?php echo $params['public_test_key']; ?>"
+    data-amount="<?php echo $this->session->userdata('total')*100; ?>"
+    data-name="Designomate"
+    data-image="http://designomate.com/coming-soon-logo.png"
+    data-locale="auto"
+	data-description="Themes/Addons"
+	
+    data-zip-code="true">
+  </script>
+<?php }?>
    <a href="" class="returnShop">Return to cart</a>
   </div>
  </form>
@@ -160,26 +173,56 @@ if ($params['testmode'] == "on") {
 <div class="col-md-5 col-sm-5 col-xs-12">
  <div class="innercartBorderRight">
   <div class="row">
+  	  <?php $amt=0; if(empty($this->session->userdata('theme')) && empty($this->session->userdata('addons'))) {   if(!empty($this->session->userdata('plan_name'))) { $amt=$this->session->userdata('plan_price');?>
    <div class="col-md-8">
     <div class="imsgeCT">
-	 <span><img src="images/plush-icon.png" /></span> <em><?php echo $this->session->userdata('plan_name');?></em>
+	 <span><img src="<?php echo base_url();?>assets/images/plush-icon.png" /></span> <em><?php echo $this->session->userdata('plan_name');?></em>
 	</div>
    </div>
    <div class="col-md-4">
     <div class="imsgeCTContent">
-	$<?php echo $this->session->userdata('plan_price'); ?>
+	$<?php echo $this->session->userdata('total'); ?>
 	</div>
    </div>
+	  <?php } } ?>
+	<?php if(!empty($this->session->userdata('theme'))) { $amt=$amt+$this->session->userdata('theme_price'); ?>
+
+   <div class="col-md-8">
+    <div class="imsgeCT">
+	 <span><img src="<?php echo base_url();?>assets/images/plush-icon.png" /></span> <em><?php echo $this->session->userdata('theme');?></em>
+	</div>
+   </div>
+   <div class="col-md-4">
+    <div class="imsgeCTContent">
+	$<?php echo $this->session->userdata('theme_price'); ?>
+	</div>
+   </div>
+    <?php } 
+	   if(!empty($this->session->userdata('addons'))) { 
+	   $addons=$this->session->userdata('addons');
+	  foreach($addons as $addon) { 
+	   ?>
+	 <div class="col-md-8">
+    <div class="imsgeCT">
+	 <span><img src="<?php echo base_url();?>assets/images/plush-icon.png" /></span> <em><?php echo $addon->addon_name;?></em>
+	</div>
+   </div>
+   <div class="col-md-4">
+    <div class="imsgeCTContent">
+	<?php if($addon->addon_price=='Free') echo "Free"; else echo "$".$addon->addon_price; ?>
+	</div>
+   </div>
+	  <?php } } ?>
   </div>
-  <div class="discountCode">
+  <!--<div class="discountCode">
    <input type="text" placeholder="Enter Discount code" />
    <button type="submit">Apply</button>
-  </div>
+  </div>-->
   <ul class="subTotal-Final">
-   <li>Subtotal</li><li>$<?php echo $this->session->userdata('plan_price'); ?></li>
+   <li>Subtotal</li><li>$<?php echo $this->session->userdata('total'); ?></li>
   </ul>
   <ul class="subTotal-Final totalUSD">
-   <li>Total</li><li><em>USD</em>$<?php echo $this->session->userdata('plan_price'); ?></li>
+   <li>Total</li><li><em>USD</em>$<?php echo $this->session->userdata('total'); ?></li>
   </ul>
   </div>
  </div>
@@ -196,4 +239,20 @@ if ($params['testmode'] == "on") {
 
 
 </div>
-
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>   
+ <script>	
+  $('#countryId').change(function () {
+	var base_url="<?php echo base_url();?>";
+	var country_id= $(this).val();
+    $.ajax({
+      url: base_url+"ajaxdata/stateList",
+      async: false,
+      type: "POST",
+      data: "id=" + country_id,
+      dataType: "html",
+      success: function(data) {
+        $('#stateId').html(data);
+      }
+    })
+  });
+ </script>

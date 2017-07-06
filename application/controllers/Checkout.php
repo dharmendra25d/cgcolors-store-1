@@ -20,8 +20,19 @@ class Checkout extends CI_Controller {
 	 */
 	public function index()
 	{
-		$d['v'] = 'checkout';
-		$this->load->view('checkout');
+	  
+		if(!empty($this->session->userdata('email'))){
+		$this->load->model('Customer_M');
+		$user=$this->Customer_M->userby_email($this->session->userdata('email'));
+		$d['user'] = $user;
+		$this->load->model('Region_M');
+		$d['countries']=$this->Region_M->countriesList();
+		
+		$this->load->view('checkout',$d);
+		} else {
+		redirect('login');
+		}
+		
 	}
 	
 	public function c_submit()
@@ -30,16 +41,12 @@ class Checkout extends CI_Controller {
 
 		$this->form_validation->set_error_delimiters('<div class="error">', '</div>');
 
-	
-
 		//Validating Email Field
 		$this->form_validation->set_rules('email', 'Email', 'required|valid_email');
 
-		
-
-		
-
 		if ($this->form_validation->run() == FALSE) {
+		$this->load->model('Customer_M');
+		$this->Customer_M->temp_data($this->input->post());
 		$this->load->view('checkout');
 		} else {
 			
@@ -69,27 +76,29 @@ class Checkout extends CI_Controller {
 		$description = "Invoice #" . $invoiceid . " - " . $invoiceid;
 	
 		try {
-				//Create Customer:
+		
+		//Create Customer:
+		if(!empty($this->session->userdata('plan_id'))) {
 		$customer = Stripe_Customer::create(array(
 			'source'   => $_POST['stripeToken'],
 			'email'    => $_POST['email'],
-			'plan'     => "starter",
+			'plan'     => $this->session->userdata('plan_id'),
 		));
-	
+		}  else {
 		$charge = Stripe_Charge::create(array(		
-			'customer'    => $customer->id,		
-			  "amount" => $amount_cents,
+			  "amount" => $this->session->userdata('total')*100,
 			  "currency" => "usd",
-			 // "source" => $_POST['stripeToken'],
+			   "source" => $_POST['stripeToken'],
 			  "description" => $description)			  
 		);
 
-		if ($charge->card->address_zip_check == "fail") {
+		if ($charge['card']['address_zip_check'] == "fail") {
 			throw new Exception("zip_check_invalid");
-		} else if ($charge->card->address_line1_check == "fail") {
+		} else if ($charge['card']['address_line1_check'] == "fail") {
 			throw new Exception("address_check_invalid");
-		} else if ($charge->card->cvc_check == "fail") {
+		} else if ($charge['card']['cvc_check'] == "fail") {
 			throw new Exception("cvc_check_invalid");
+		}
 		}
 		// Payment has succeeded, no exceptions were thrown or otherwise caught				
 
@@ -122,42 +131,75 @@ class Checkout extends CI_Controller {
 		}		  
 	}
 	
-	echo "<BR>Stripe Payment Status : ".$result;
+	//echo "<BR>Stripe Payment Status : ".$result;
 	
-	echo "<BR>Stripe Response : ";
+	//echo "<BR>Stripe Response : ";
 	
-	print_r($charge); exit;	
+	//print_r($charge); 
 		//Setting values for tabel columns
-		$data = array(
-		'first_name' => $this->input->post('first_name'),
-		'last_name' => $this->input->post('last_name'),
-		'city' => $this->input->post('city'),
-		//'street_address' => $this->input->post('street_address'),
-		//'street_address_2' => $this->input->post('street_address_2'),
-		'state' => $this->input->post('state'),
-		'country' => $this->input->post('country'),
-		'zip_code' => $this->input->post('zipcode'),
-		'email' => $this->input->post('email'),
-		'phone' => $this->input->post('phone'),
-		//'theme_name' => $this->input->post('theme_name'),
-		//'theme_price' => $this->input->post('theme_price'),
-		//'plan_name' => $this->input->post('plan_name'),
-		//'plan_price' => $this->input->post('daddress'),
-		//'phone' => $this->input->post('phone'),
-		//'addons' => $this->input->post('dname'),
-		'total' => $this->input->post('total')
-		//'payment_status' => $this->input->post('payment_status')
 		
-		);
+	if(empty($this->session->userdata('plan_id'))) {
+	$plan_id="Null";
+	} 
+	else {
+	$plan_id=$this->session->userdata('plan_id');
+	}
+	if(empty($this->session->userdata('theme_id'))) {
+	$theme_id="Null";
+	} 
+	else {
+	$theme_id=$this->session->userdata('theme_id');
+	}
+	if(empty($this->session->userdata('addons_id'))) {
+	$addons_id="Null";
+	} 
+	else {
+	$addons_id=$this->session->userdata('addons_id');
+	}
+	$data = array(
+	'first_name' => $this->input->post('first_name'),
+	'last_name' => $this->input->post('last_name'),
+	'city' => $this->input->post('city'),
+	'address' => $this->input->post('address'),
+	'street_address' => $this->input->post('street_address'),
+	'state' => $this->input->post('state'),
+	'country' => $this->input->post('country'),
+	'zip_code' => $this->input->post('zipcode'),
+	'email' => $this->input->post('email'),
+	'phone' => $this->input->post('phone'),
+	'plan_id' => $plan_id,
+	'theme_id' => $theme_id,
+	'addons_id' => $addons_id,
+	'total' => $this->session->userdata('total'),
+	'payment_status' => $result
+	
+	);
 		//Transfering data to Model
 		
 		$this->db->insert('cg_orders', $data);
-
+		$this->load->model('Customer_M');
+		$this->Customer_M->temp_data($this->input->post());
+		$this->session->unset_userdata('total');
+		$this->session->unset_userdata('addons_id');
+		$this->session->unset_userdata('theme_id');
+		
+		$this->session->unset_userdata('addons');
+		$this->session->unset_userdata('plan_name');
+		$this->session->unset_userdata('plan_price');
+		$this->session->unset_userdata('theme');
 		//$this->insert_model->form_insert($data);
-		$data['message'] = 'Data Inserted Successfully';
-		$data['v']='pay';
+	
 		//Loading View
-		$this->load->view('pay', $data);
+			if(!empty($this->session->userdata('plan_id'))) {
+				$this->session->unset_userdata('plan_id');
+		$this->session->set_flashdata('order_success','Congratulations! You have purchased plan!!');
+
+		redirect('themes');
+		}
+		 else {
+		$this->session->set_flashdata('order_success','Congratulations! Your payment is successfully completed!!');
+		redirect('dashboard');
+		}
 		}
 	}
 	

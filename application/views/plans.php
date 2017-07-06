@@ -19,102 +19,35 @@ from starting eCommerce business</h1>
   <div class="tab-content">
     <div id="home" class="tab-pane fade in active">
       <div class="row">
+	  <?php foreach($plans_m as $plan) { ?>
 	   <div class="col-md-3 col-sm-6 col-xs-12">
 	    <div class="planTable">
-		 <em> Essential</em>
-		 <h3><i>$</i>100<i class="timeM-Y">/mo</i></h3>
-		 <p>Grow your online business with 
-marketing tools proven to 
-increase conversion</p>
-<a href="plans/buynow?p=essential&pr=100">BUY NOW!</a>
+		 <em><?php echo $plan->plan_name;?> </em>
+		 <?php if($plan->plan_price=='Free') { ?>
+		 <h3><?php echo $plan->plan_price;?></h3>
+		 <?php  } elseif(!empty($plan->plan_price)) { ?>
+		 <h3><i>$</i><?php echo $plan->plan_price;?><i class="timeM-Y">/mo</i></h3>
+		 <?php } ?>
+		 <p><?php echo $plan->plan_desc;?></p>
+<a href="plans/buynow?p=<?php echo $plan->id;?>&pr=<?php echo $plan->plan_price;?>">BUY NOW!</a>
 		</div>
 	   </div>
-	   
-	   <div class="col-md-3 col-sm-6 col-xs-12">
-	    <div class="planTable">
-		 <em>  Starter</em>
-		 <h3><i>$</i>169<i class="timeM-Y">/mo</i></h3>
-		 <p>Grow your online business with 
-marketing tools proven to 
-increase conversion</p>
-<a href="#">BUY NOW!</a>
-		</div>
-	   </div>
-	   
-	   
-	   <div class="col-md-3 col-sm-6 col-xs-12">
-	    <div class="planTable">
-		 <em> Advanced</em>
-		 <h3><i>$</i>268<i class="timeM-Y">/mo</i></h3>
-		 <p>Grow your online business with 
-marketing tools proven to 
-increase conversion</p>
-<a href="#">BUY NOW!</a>
-		</div>
-	   </div>
-	   
-	   
-	   <div class="col-md-3 col-sm-6 col-xs-12">
-	    <div class="planTable">
-		 <em> Essential</em>
-		 <h3><i>$</i>432<i class="timeM-Y">/mo</i></h3>
-		 <p>Grow your online business with 
-marketing tools proven to 
-increase conversion</p>
-<a href="#">BUY NOW!</a>
-		</div>
-	   </div>
-	   
-	   
+	  <?php } ?>
+	
 	  </div>
     </div>
     <div id="menu1" class="tab-pane fade">
       <div class="row">
+	  <?php foreach($plans_y as $plan) { ?>
 	   <div class="col-md-3 col-sm-6 col-xs-12">
 	    <div class="planTable">
-		 <em> Essential</em>
-		 <h3><i>$</i>700<i class="timeM-Y">/mo</i></h3>
-		 <p>Grow your online business with 
-marketing tools proven to 
-increase conversion</p>
-<a href="#">BUY NOW!</a>
-		</div>
+		 <em><?php echo $plan->plan_name;?> </em>
+		 <h3><i>$</i><?php echo $plan->plan_price;?><i class="timeM-Y">/yearly</i></h3>
+		 <p><?php echo $plan->plan_desc;?></p>
+<a href="plans/buynow?p=<?php echo $plan->id;?>&pr=<?php echo $plan->plan_price;?>">BUY NOW!</a>		</div>
 	   </div>
+	  <?php } ?>
 	   
-	   <div class="col-md-3 col-sm-6 col-xs-12">
-	    <div class="planTable">
-		 <em>  Starter</em>
-		 <h3><i>$</i>469<i class="timeM-Y">/mo</i></h3>
-		 <p>Grow your online business with 
-marketing tools proven to 
-increase conversion</p>
-<a href="#">BUY NOW!</a>
-		</div>
-	   </div>
-	   
-	   
-	   <div class="col-md-3 col-sm-6 col-xs-12">
-	    <div class="planTable">
-		 <em> Advanced</em>
-		 <h3><i>$</i>268<i class="timeM-Y">/mo</i></h3>
-		 <p>Grow your online business with 
-marketing tools proven to 
-increase conversion</p>
-<a href="#">BUY NOW!</a>
-		</div>
-	   </div>
-	   
-	   
-	   <div class="col-md-3 col-sm-6 col-xs-12">
-	    <div class="planTable">
-		 <em> Essential</em>
-		 <h3><i>$</i>302<i class="timeM-Y">/mo</i></h3>
-		 <p>Grow your online business with 
-marketing tools proven to 
-increase conversion</p>
-<a href="#">BUY NOW!</a>
-		</div>
-	   </div>
 	   
 	   
 	  </div>

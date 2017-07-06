@@ -104,7 +104,7 @@ from starting eCommerce business</h1>
 		 <h3><i>$</i><?php echo $plan->plan_price;?><i class="timeM-Y">/mo</i></h3>
 		 <?php } ?>
 		 <p><?php echo $plan->plan_desc;?></p>
-<a href="plans/buynow?p=<?php echo $plan->plan_name;?>&pr=<?php echo $plan->plan_price;?>">BUY NOW!</a>
+<a href="plans/buynow?p=<?php echo $plan->id;?>&pr=<?php echo $plan->plan_price;?>">BUY NOW!</a>
 		</div>
 	   </div>
 	  <?php } ?>

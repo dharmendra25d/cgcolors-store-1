@@ -21,19 +21,27 @@ class Plans extends CI_Controller {
 	public function index()
 	{
 		$d['v'] = 'plans';
-		
+		$this->load->model('Plans_M');
+		$d['plans_m']=$this->Plans_M->plans_list_m();
+		$d['plans_y']=$this->Plans_M->plans_list_y();
 		$this->load->view('template', $d);
 	}
 	
 	public function buynow()
 	{
-		$plan_name = $this->input->get('p');
-		$plan_price = $this->input->get('pr');
+		$plan_id = $this->input->get('p');
+		$this->load->model('Plans_M');
+		$this->load->model('Customer_M');
+		$this->Customer_M->temp_data($this->input->get());
+		$plans = $this->Plans_M->single_plan($plan_id);
 		$this->session->set_userdata(array(
-                            'plan_name'       => $plan_name,
-                            'plan_price'      => $plan_price,
+                            'plan_name'       => $plans->plan_name,
+                            'plan_price'      => $plans->plan_price,
+							'plan_id'          =>$plan_id,
+							'total'				=>$plans->plan_price,
 						     'status'        => TRUE
                     ));
+				
 		$d['v'] = 'plans';
 		redirect('cart');
 	}

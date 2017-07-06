@@ -17,7 +17,8 @@
 	   <td style="text-align:left;">PRODUCT</td>
 	   <td style="width:10%;">PRICE</td>
 	  </tr>
-	  <?php $amt=0; if(!empty($this->session->userdata('plan_name'))) { $amt=$this->session->userdata('plan_price');?>
+	  
+	  <?php $amt=0; if(empty($this->session->userdata('theme')) && empty($this->session->userdata('addons'))) {    $price = (float)($this->session->userdata('plan_price'));  $amt=$this->session->userdata('plan_price');?>
 	  <tr class="td-right-border bgPlus-relative">
 	   <td><a href="#" class="delete-plan" data-plan="<?php echo $this->session->userdata('plan_name');?>" >x</a></td>
 	   <td style="width:15%;"><a href=""><img src="images/them.jpg" alt="" /></a></td>
@@ -26,7 +27,7 @@
 	  </tr>
 	  <?php } ?>
 
-	  <?php if(!empty($this->session->userdata('theme'))) { $amt=$amt+$this->session->userdata('theme_price'); ?>
+	  <?php if(!empty($this->session->userdata('theme'))) {   $price = (float)($this->session->userdata('theme_price')); $amt=$amt+$price; ?>
 	  <tr class="td-right-border bgPlus-relative">
 	   <td><a class="delete-theme" data-plan="<?php echo $this->session->userdata('theme');?>" href="#">x</a></td>
 	   <td style="width:15%;"><a href=""><img src="images/them.jpg" alt="" /></a></td>
@@ -37,16 +38,20 @@
 	   if(!empty($this->session->userdata('addons'))) {
 	 
 	 $addons=$this->session->userdata('addons');
-	  
-	  foreach($addons as $addon) { ?>
+	 $c=0;
+	
+	  foreach($addons as $addon) { if($addon->addon_price!='Free') { 
+	  $price = (float)($addon->addon_price.".00");
+
+	  $amt=$amt+$price; }?>
 	  <tr class="td-right-border bgPlus-relative">
-	   <td><a class="delete-theme" data-plan="<?php echo $addon; ?>" href="#">x</a></td>
+	   <td><a class="delete-addons" data-plan="<?php echo $c; ?>" href="#">x</a></td>
 	   <td style="width:15%;"><a href=""><img src="images/them.jpg" alt="" /></a></td>
-	   <td style="text-align:left;"><a href=""> <?php echo $addon; ?></a></td>
-	   <td style="width:10%;">$<?php echo $addon; ?></td>
+	   <td style="text-align:left;"><a href=""> <?php echo $addon->addon_name; ?></a></td>
+	   <td style="width:10%;"><?php if($addon->addon_price=='Free') echo "Free"; else echo "$".$addon->addon_price; ?></td>
 	  </tr>
 	  
-	  <?php }
+	  <?php $c++; }
 	  }		  
 	  ?>
 	  
@@ -59,7 +64,7 @@
     <ul class="subtotalList">
 	 <li>Subtotal</li>
 	 
-	 <li>$<?php echo $amt; ?></li>
+	 <li>$<?php echo $amt; $this->session->set_userdata('total',$amt); ?></li>
 	</ul>
 	<p>Shipping & calculated at checkout</p>
 	<ul class="update-checkout">
@@ -100,6 +105,24 @@ if(confirm("Are You sure want to remove it?")) {
  $.ajax({
          type: "POST",
          url: base_url + "index.php/cart/remove_theme", 
+         data: {plan: $(this).data('plan')},
+         dataType: "text",  
+         cache:false,
+         success: 
+              function(data){
+            location.reload();
+				
+              }
+          });
+} 
+});
+
+$(".delete-addons").on('click', function() {
+	var base_url = "<?php echo base_url();?>";
+if(confirm("Are You sure want to remove it?")) {
+ $.ajax({
+         type: "POST",
+         url: base_url + "index.php/cart/remove_addons", 
          data: {plan: $(this).data('plan')},
          dataType: "text",  
          cache:false,

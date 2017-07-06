@@ -21,7 +21,8 @@ class Register extends CI_Controller {
 	public function index()
 	{
        	$d['v'] = 'register';
-		
+		$this->load->model('Region_M');
+		$d['countries']=$this->Region_M->countriesList();
 		$this->load->view('template', $d);
 	}
 	
@@ -39,7 +40,10 @@ class Register extends CI_Controller {
 
                 if ($this->form_validation->run() == FALSE)
                 {
-                       $d['v']='register';
+                       $d = $this->input->post();
+					   $this->Customer_M->temp_data($d);
+					   $d['v']='register';
+					   
 					   $this->load->view('template', $d);
                 }
                 else
@@ -47,7 +51,8 @@ class Register extends CI_Controller {
                        	$d = $this->input->post();
 						$this->load->model('Customer_M');
 						$this->Customer_M->add($d);
-						redirect('login');	
+						$this->session->set_userdata(array('name'=> $this->input->post('fname'),'email'=>$this->input->post('email')));
+						redirect('plans');	
 							
                 }
       
