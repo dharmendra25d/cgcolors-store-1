@@ -15,7 +15,17 @@ Class Addons_M extends CI_Model {
 	$this->db->select('*');
 	$query = $this->db->get($this->table);
 	$addons = ($query->result());
+	return $addons;
+
+	}
 	
+	public function addons_list() {
+
+	$this->db->select('*');
+	$this->db->where('email',$this->session->userdata('email'));
+	$this->db->join('addons', 'addons.id = cg_orders.addons_id', 'inner');
+	$query = $this->db->get('cg_orders');
+	$addons = ($query->result());
 	return $addons;
 
 	}

@@ -18,7 +18,7 @@
 	   <td style="width:10%;">PRICE</td>
 	  </tr>
 	  
-	  <?php $amt=0; if(empty($this->session->userdata('theme')) && empty($this->session->userdata('addons'))) {    $price = (float)($this->session->userdata('plan_price'));  $amt=$this->session->userdata('plan_price');?>
+	  <?php $amt=0; if(empty($this->session->userdata('theme')) && empty($this->session->userdata('addons')) && !empty($this->session->userdata('plan_name'))) {    $price = (float)($this->session->userdata('plan_price'));  $amt=$this->session->userdata('plan_price');?>
 	  <tr class="td-right-border bgPlus-relative">
 	   <td><a href="#" class="delete-plan" data-plan="<?php echo $this->session->userdata('plan_name');?>" >x</a></td>
 	   <td style="width:15%;"><a href=""><img src="images/them.jpg" alt="" /></a></td>
@@ -35,30 +35,39 @@
 	   <td style="width:10%;">$<?php echo $this->session->userdata('theme_price'); ?></td>
 	  </tr>
 	  <?php } 
-	   if(!empty($this->session->userdata('addons'))) {
-	 
-	 $addons=$this->session->userdata('addons');
-	 $c=0;
-	
-	  foreach($addons as $addon) { if($addon->addon_price!='Free') { 
+		if(!empty($this->session->userdata('addons'))) {
+
+		$addons=$this->session->userdata('addons');
+		$c=0;
+			  $keys = array_keys($addons);
+
+	  foreach($addons as $addon) { 
+
+	  
+	  if($addon->addon_price!='Free') { 
 	  $price = (float)($addon->addon_price.".00");
 
-	  $amt=$amt+$price; }?>
+	  $amt=$amt+$price; }
+	     $mykey = ($keys[$c]);?>
 	  <tr class="td-right-border bgPlus-relative">
-	   <td><a class="delete-addons" data-plan="<?php echo $c; ?>" href="#">x</a></td>
+	   <td><a class="delete-addons" data-plan="<?php echo $mykey; ?>" href="#">x</a></td>
 	   <td style="width:15%;"><a href=""><img src="images/them.jpg" alt="" /></a></td>
 	   <td style="text-align:left;"><a href=""> <?php echo $addon->addon_name; ?></a></td>
 	   <td style="width:10%;"><?php if($addon->addon_price=='Free') echo "Free"; else echo "$".$addon->addon_price; ?></td>
 	  </tr>
 	  
 	  <?php $c++; }
-	  }		  
-	  ?>
-	  
+	  }	?>
 	    
 
 	 </tbody> 
 	</table>
+		  
+	     <?php if(empty($this->session->userdata('plan_name')) && empty($this->session->userdata('addons')) && empty($this->session->userdata('theme'))) { ?>
+		   <div class="row">
+	 <div class="col-md-12 col-sm-12"><p style="text-align:center">Your Cart is Empty</p></div>
+	</div>	  
+		<?php } ?>
    </div>
   <div class="checkOut-went">
     <ul class="subtotalList">

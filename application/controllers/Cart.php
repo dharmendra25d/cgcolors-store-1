@@ -51,6 +51,7 @@ class Cart extends CI_Controller {
 		$this->load->model('Customer_M');
 		$this->Customer_M->temp_data($this->input->post());
 		$this->session->unset_userdata('plan_name');
+		$this->session->unset_userdata('plan_price');
 		return true;
 	}
 	
@@ -71,6 +72,7 @@ class Cart extends CI_Controller {
 		$this->load->model('Customer_M');
 		$this->Customer_M->temp_data($this->input->post());
 		$this->session->unset_userdata('theme');
+		$this->session->unset_userdata('theme_price');
 		return true;
 	}
 }

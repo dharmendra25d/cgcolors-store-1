@@ -27,6 +27,16 @@ class Themes extends CI_Controller {
 	}
 	
 	
+		public function themes_list()
+	{
+	 $this->load->model('Themes_M');
+	 $themes=$this->Themes_M->themes_list();
+	//redirect('plan-list');
+	 $d['list'] = $themes;
+	 $d['v'] = 'themes-list';
+	$this->load->view('backtemplates', $d);
+	}
+	
 	
 	public function buynow() {
 	    $theme_id = $this->input->get('p');

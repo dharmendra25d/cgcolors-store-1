@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Addons extends CI_Controller {
+class Daddons extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -24,6 +24,15 @@ class Addons extends CI_Controller {
 		$this->load->model('Addons_M');
 		$d['list'] = $this->Addons_M->allAddons();
 		$this->load->view('template', $d);
+	}
+	public function addons_list()
+	{
+	 $this->load->model('Addons_M');
+	 $addons=$this->Addons_M->addons_list();
+	//redirect('plan-list');
+	 $d['list'] = $addons;
+	 $d['v'] = 'addons-list';
+	$this->load->view('backtemplates', $d);
 	}
 	
 	

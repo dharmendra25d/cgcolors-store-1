@@ -30,6 +30,7 @@ class Checkout extends CI_Controller {
 		
 		$this->load->view('checkout',$d);
 		} else {
+			
 		redirect('login');
 		}
 		
@@ -172,11 +173,23 @@ class Checkout extends CI_Controller {
 	'addons_id' => $addons_id,
 	'total' => $this->session->userdata('total'),
 	'payment_status' => $result
-	
 	);
 		//Transfering data to Model
-		
+		if(!empty($this->session->userdata('plan_id'))) {
+			$this->load->model('Plans_M');
+			if(!empty($this->Plans_M->check_user_plan())) {
+				$this->db->where('email',$this->input->post('email'));
+				$this->db->update('cg_orders',$data);
+				$this->session->unset_userdata('plan_id');
+		$this->session->set_flashdata('order_success','Congratulations! You have upgraded your plan!!');
+
+		redirect('dashboard');
+			} else {
+				$this->db->insert('cg_orders', $data);
+			}
+		} else {
 		$this->db->insert('cg_orders', $data);
+		}
 		$this->load->model('Customer_M');
 		$this->Customer_M->temp_data($this->input->post());
 		$this->session->unset_userdata('total');

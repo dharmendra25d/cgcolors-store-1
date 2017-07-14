@@ -21,7 +21,10 @@ class Login extends CI_Controller {
 	public function index()
 	{
        	$d['v'] = 'login';
-		
+		 $this->load->library('user_agent');  // load user agent library
+
+    //Set session for the referrer url
+    $this->session->set_userdata('referrer_url', $this->agent->referrer() );  
 		$this->load->view('template', $d);
 	}
 	
@@ -38,8 +41,16 @@ class Login extends CI_Controller {
 	 if($this->Customer_M->vauth($this->input->post())) {
 		$user = $this->Customer_M->userby_email($this->input->post('email')); 
 	 $this->session->set_userdata(array('name'=> $user->fname,'email'=>$this->input->post('email')));
-	 
+	 if( $this->session->userdata('referrer_url') ) {
+    //Store in a variable so that can unset the session
+    $redirect_back = $this->session->userdata('referrer_url');
+    $this->session->unset_userdata('referrer_url');
+    redirect( $redirect_back );
+}
+
+else {
 	 redirect('dashboard/plans');
+}
 		
 	 } else {
 		 $this->session->set_flashdata('login_error', 'Sorry Email/Password is incorrect');

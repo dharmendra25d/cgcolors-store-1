@@ -20,6 +20,21 @@ Class Themes_M extends CI_Model {
 
 	}
 	
+	public function themes_list() {
+
+	$this->db->select('*');
+	$this->db->where('email',$this->session->userdata('email'));
+	$this->db->join('themes', 'themes.id = cg_orders.theme_id', 'inner');
+
+	$query = $this->db->get('cg_orders');
+
+	
+	$theme = ($query->result());
+	
+	return $theme;
+
+	}
+	
 	public function plans_list_y() {
 
 	$this->db->select('*');

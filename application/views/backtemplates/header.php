@@ -28,7 +28,7 @@
         <div class="col-md-3 left_col">
           <div class="left_col scroll-view">
             <div class="navbar nav_title" style="border: 0;">
-              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+              <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Designomate</span></a>
             </div>
 
             <div class="clearfix"></div>
@@ -40,7 +40,7 @@
               </div>
               <div class="profile_info">
                 <span>Welcome,</span>
-                <h2>John Doe</h2>
+                <h2><?php print_r($this->session->userdata('name')); ?></h2>
               </div>
             </div>
             <!-- /menu profile quick info -->
@@ -57,7 +57,7 @@
                   </li>
                   <li><a><i class="fa fa-edit"></i>Plans <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="<?php echo base_url();?>plans">Add New</a></li>
+                      <li><a href="<?php echo base_url();?>plans">Upgrade</a></li>
                       <li><a href="<?php echo base_url();?>plans/plans_list">Plans List</a></li>
                     </ul>
                   </li>
@@ -71,8 +71,8 @@
                 
                   <li><a><i class="fa fa-clone"></i>Addons <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="<?php echo base_url();?>addons">Add New</a></li>
-                      <li><a href="<?php echo base_url();?>addons/addons_list">Addons List</a></li>
+                      <li><a href="<?php echo base_url();?>themes/addons">Add New</a></li>
+                      <li><a href="<?php echo base_url();?>daddons/addons_list">Addons List</a></li>
                     </ul>
                   </li>
                 </ul>
@@ -111,7 +111,7 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="images/img.jpg" alt="">John Doe
+                    <img src="images/img.jpg" alt=""><?php print_r($this->session->userdata('name')); ?>
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">

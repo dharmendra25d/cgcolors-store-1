@@ -27,6 +27,15 @@ class Plans extends CI_Controller {
 		$this->load->view('template', $d);
 	}
 	
+	public function plans_list()
+	{
+	 $this->load->model('Plans_M');
+	 $plans=$this->Plans_M->plans_list();
+	//redirect('plan-list');
+	 $d['list'] = $plans;
+	 $d['v'] = 'plans-list';
+	$this->load->view('backtemplates', $d);
+	}
 	public function buynow()
 	{
 		$plan_id = $this->input->get('p');
