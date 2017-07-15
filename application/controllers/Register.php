@@ -50,9 +50,16 @@ class Register extends CI_Controller {
                 {
                        	$d = $this->input->post();
 						$this->load->model('Customer_M');
-						$this->Customer_M->add($d);
-						$this->session->set_userdata(array('name'=> $this->input->post('fname'),'email'=>$this->input->post('email')));
-						redirect('plans');	
+						$userid = $this->Customer_M->add($d);
+						$this->session->set_userdata(array('user_id'=>$userid, 'name'=> $this->input->post('fname'),'email'=>$this->input->post('email')));
+						 if( $this->session->userdata('referrer_url') ) {
+					//Store in a variable so that can unset the session
+					$redirect_back = $this->session->userdata('referrer_url');
+					$this->session->unset_userdata('referrer_url');
+					redirect( $redirect_back );
+						} else {
+								redirect('plans');	
+						}
 							
                 }
       

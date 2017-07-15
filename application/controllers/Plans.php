@@ -43,6 +43,9 @@ class Plans extends CI_Controller {
 		$this->load->model('Customer_M');
 		$this->Customer_M->temp_data($this->input->get());
 		$plans = $this->Plans_M->single_plan($plan_id);
+		if($plans->plan_price=='Free') {
+		 $plans->plan_price=0;
+		}
 		$this->session->set_userdata(array(
                             'plan_name'       => $plans->plan_name,
                             'plan_price'      => $plans->plan_price,

@@ -35,9 +35,9 @@
 
             <!-- menu profile quick info -->
             <div class="profile clearfix">
-              <div class="profile_pic">
+              <!--<div class="profile_pic">
                 <img src="images/img.jpg" alt="..." class="img-circle profile_img">
-              </div>
+              </div>-->
               <div class="profile_info">
                 <span>Welcome,</span>
                 <h2><?php print_r($this->session->userdata('name')); ?></h2>
@@ -111,19 +111,19 @@
               <ul class="nav navbar-nav navbar-right">
                 <li class="">
                   <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <img src="images/img.jpg" alt=""><?php print_r($this->session->userdata('name')); ?>
+                    <?php print_r($this->session->userdata('name')); ?>
                     <span class=" fa fa-angle-down"></span>
                   </a>
                   <ul class="dropdown-menu dropdown-usermenu pull-right">
-                    <li><a href="javascript:;"> Profile</a></li>
+                   <!-- <li><a href="javascript:;"> Profile</a></li>
                     <li>
                       <a href="javascript:;">
                         <span class="badge bg-red pull-right">50%</span>
                         <span>Settings</span>
                       </a>
-                    </li>
+                    </li>-->
                     <li><a href="javascript:;">Help</a></li>
-                    <li><a href="login.html"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
+                    <li><a href="<?php echo base_url();?>login/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                   </ul>
                 </li>
 

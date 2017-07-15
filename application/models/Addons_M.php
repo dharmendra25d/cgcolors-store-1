@@ -21,12 +21,27 @@ Class Addons_M extends CI_Model {
 	
 	public function addons_list() {
 
-	$this->db->select('*');
+	$this->db->select('addons_id');
 	$this->db->where('email',$this->session->userdata('email'));
-	$this->db->join('addons', 'addons.id = cg_orders.addons_id', 'inner');
+	///$this->db->join('addons', 'addons.id = cg_orders.addons_id', 'inner');
 	$query = $this->db->get('cg_orders');
 	$addons = ($query->result());
-	return $addons;
+	$addonslist = array();
+
+	foreach($addons as $addon) {
+		if(!empty($addon->addons_id)) {
+		$id=explode(',',$addon->addons_id);
+		array_push($addonslist,$id);
+		}
+	}
+	$addonslist=array_reduce($addonslist, 'array_merge', array());
+
+	$this->db->select('*');
+	$this->db->where_in('id',$addonslist);
+	$query = $this->db->get($this->table);
+	$plans = ($query->result());
+	
+	return $plans;
 
 	}
 	

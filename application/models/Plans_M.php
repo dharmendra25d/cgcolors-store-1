@@ -34,9 +34,20 @@ Class Plans_M extends CI_Model {
 	
 	public function plans_list() {
 
-	$this->db->select_max('plan_id');
+	
+	$this->db->select('*');
+	$this->db->where('user_id',$this->session->userdata('user_id'));
+	$this->db->join('plans', 'plans.id = user_plans.plan_id', 'inner');
+
+	$query = $this->db->get('user_plans');
+   
+	$plans = ($query->result());
+	return $plans;
+	
+	/*(
+	$this->db->select('plan_id');
 	$this->db->where('email',$this->session->userdata('email'));
-	$query = $this->db->get('cg_orders');
+	$query = $this->db->get($this->table);
 	
 	$plans = ($query->row());
 	
@@ -46,15 +57,15 @@ Class Plans_M extends CI_Model {
 	$plans = ($query->result());
 	
 	return $plans;
-	//return $plans;
+	//return $plans; */
 
 	} 
 	
 	public function check_user_plan() {
 
-	$this->db->select_max('plan_id');
-	$this->db->where('email',$this->session->userdata('email'));
-	$query = $this->db->get('cg_orders');
+	$this->db->select('plan_id');
+	$this->db->where('user_id',$this->session->userdata('user_id'));
+	$query = $this->db->get('user_plans');
 	
 	$plans = ($query->row());
 	

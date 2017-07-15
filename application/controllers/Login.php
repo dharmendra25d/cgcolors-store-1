@@ -40,7 +40,7 @@ class Login extends CI_Controller {
 	} else {
 	 if($this->Customer_M->vauth($this->input->post())) {
 		$user = $this->Customer_M->userby_email($this->input->post('email')); 
-	 $this->session->set_userdata(array('name'=> $user->fname,'email'=>$this->input->post('email')));
+	 $this->session->set_userdata(array('user_id'=>$user->id,'name'=> $user->fname,'email'=>$this->input->post('email')));
 	 if( $this->session->userdata('referrer_url') ) {
     //Store in a variable so that can unset the session
     $redirect_back = $this->session->userdata('referrer_url');
@@ -62,6 +62,13 @@ else {
 							
      }
       
+	}
+	
+	public function logout()
+	{
+		$this->session->sess_destroy();
+		redirect('login');
+	
 	}
 		
 	

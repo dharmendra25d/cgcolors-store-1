@@ -30,7 +30,6 @@ class Checkout extends CI_Controller {
 		
 		$this->load->view('checkout',$d);
 		} else {
-			
 		redirect('login');
 		}
 		
@@ -38,6 +37,7 @@ class Checkout extends CI_Controller {
 	
 	public function c_submit()
 	{
+		error_reporting(E_ALL);
 		$this->load->library('form_validation');
 
 		$this->form_validation->set_error_delimiters('<div class="error">', '</div>');
@@ -50,7 +50,7 @@ class Checkout extends CI_Controller {
 		$this->Customer_M->temp_data($this->input->post());
 		$this->load->view('checkout');
 		} else {
-			
+		if($this->session->userdata('total')!=0){
 		require APPPATH.'stripe/Stripe.php';
 
 	
@@ -131,7 +131,11 @@ class Checkout extends CI_Controller {
 			$result = "declined";
 		}		  
 	}
-	
+		}
+		}
+		else {
+			$result = "success";
+		}
 	//echo "<BR>Stripe Payment Status : ".$result;
 	
 	//echo "<BR>Stripe Response : ";
@@ -168,6 +172,7 @@ class Checkout extends CI_Controller {
 	'zip_code' => $this->input->post('zipcode'),
 	'email' => $this->input->post('email'),
 	'phone' => $this->input->post('phone'),
+	'customer_note' => $this->input->post('customer_note'),
 	'plan_id' => $plan_id,
 	'theme_id' => $theme_id,
 	'addons_id' => $addons_id,
@@ -178,15 +183,32 @@ class Checkout extends CI_Controller {
 		if(!empty($this->session->userdata('plan_id'))) {
 			$this->load->model('Plans_M');
 			if(!empty($this->Plans_M->check_user_plan())) {
-				$this->db->where('email',$this->input->post('email'));
-				$this->db->update('cg_orders',$data);
+				
+				$this->db->where('user_id',$this->session->userdata('user_id'));
+				
+				$plan_data = array(
+				'plan_id' => $plan_id,
+					);
+					
+				$this->db->update('user_plans',$plan_data);
+				$this->db->insert('cg_orders', $data);
 				$this->session->unset_userdata('plan_id');
 		$this->session->set_flashdata('order_success','Congratulations! You have upgraded your plan!!');
 
 		redirect('dashboard');
+			
 			} else {
+				
+				$plan_data = array(
+			'user_id' => $this->session->userdata('user_id'),
+			'plan_id' => $plan_id,
+				);
+				
+			$this->db->insert('user_plans', $plan_data);
 				$this->db->insert('cg_orders', $data);
 			}
+		
+			
 		} else {
 		$this->db->insert('cg_orders', $data);
 		}
@@ -217,5 +239,4 @@ class Checkout extends CI_Controller {
 	}
 	
 
-}
 }

@@ -1,7 +1,7 @@
 <?php
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Dashboard extends CI_Controller {
+class Features extends CI_Controller {
 
 	/**
 	 * Index Page for this controller.
@@ -20,25 +20,9 @@ class Dashboard extends CI_Controller {
 	 */
 	public function index()
 	{
-       	if($this->session->userdata('user_id')) {
-		$d['v'] = 'dashboard';
 		
-		$this->load->view('backtemplates', $d);
-		} else {
-		redirect('login');
-		}
+       	$d['v'] = 'features';
+		
+		$this->load->view('template', $d);
 	}
-	
-	public function plans()
-	{
-		$d['v'] = 'pricingtables';
-		
-		$this->load->view('backtemplates', $d);
-							
-     }
-      
-		
-	
-		//$this->load->view('template', $d);
-
 }

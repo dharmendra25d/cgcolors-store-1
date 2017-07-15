@@ -1,4 +1,3 @@
-<?php include('header.php'); ?>
 <div class="topSpacingHeight"></div>
 <div class="BottomTopSpacing" id="faq">
  <section class="title">
@@ -74,4 +73,3 @@ processor"?</a></li>
   </div>
 </section>
 </div>
-<?php include('footer.php'); ?>

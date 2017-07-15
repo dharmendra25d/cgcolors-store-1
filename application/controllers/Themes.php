@@ -71,6 +71,7 @@ class Themes extends CI_Controller {
 		$this->load->model('Addons_M');
 		
 		$addons_id="";
+		if(!empty($addons_items)) {
 		foreach($addons_items as $addon) {
 			$addons_id .= $addon.",";
 			$list = $this->Addons_M->single_addon($addon);
@@ -83,6 +84,7 @@ class Themes extends CI_Controller {
                             'addons'  => $addons_item,
 							'addons_id' =>$addons_id 
                     ));
+		}
 		redirect('cart');
 	}
 	

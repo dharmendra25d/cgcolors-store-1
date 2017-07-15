@@ -45,7 +45,7 @@
 	 <input type="submit" name="submit" value="Register" />
 	</div>
    </form>
-   <em>Already have an account? <a href="login.php">Login here</a>	</em>
+   <em>Already have an account? <a href="<?php echo base_url();?>login">Login here</a>	</em>
   </div>
  </section>
  

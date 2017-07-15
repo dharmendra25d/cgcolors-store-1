@@ -44,12 +44,12 @@
   <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
   <div class="navigation">
   <ul>
-   <li><a href="#">Home </a></li>                   
-   <li><a href="#">About</a></li>                     
-   <li><a href="#">Features</a></li>                    
-   <li><a href="#">Pricing</a></li>                   
-   <li><a href="#">FAQ</a></li>                    
-   <li><a href="#">Support</a></li>
+   <li><a href="<?php echo base_url();?>">Home </a></li>                   
+   <li><a href="<?php echo base_url();?>about">About</a></li>                     
+   <li><a href="<?php echo base_url();?>features">Features</a></li>                    
+   <li><a href="<?php echo base_url();?>plans">Pricing</a></li>                   
+   <li><a href="<?php echo base_url();?>faq">FAQ</a></li>                    
+   <li><a href="<?php echo base_url();?>support">Support</a></li>
   </ul>
  </div>
 </div></nav>

@@ -90,13 +90,13 @@ img{max-width:100%;}
 .borderNone{border:1px solid #e9e9e9; width:300px; border-radius:20px; margin:100px auto; float:none; overflow:hidden; position:relative;}
 .borderNone > li{width:50%; border:none; text-transform:uppercase; text-align:center; border:none; border-radius:0;  margin:0 0 -3px 0;}
 .borderNone > li.active a{border:none; color:#fff; background:#f7333b;  border-radius:0;}
-.borderNone > li:hover{color:#fff; background:#000; border:none;  border-radius:0;}
+.borderNone > li:hover{color:#fff; background:#f7f7f7; border:none;  border-radius:0;}
 .borderNone > li.active a:hover{color:#fff; border:none; background:#f7333b;  border-radius:0;}
 .borderNone > li.active > a, .borderNone > li.active > a:hover, .borderNone > li.active > a:focus{color:#fff; border:none; background:#f7333b;  border-radius:0; margin:0;}
-.borderNone > li > a:hover, .borderNone > li > a:focus{background:#000; border-color:#000; color:#fff;}
+.borderNone > li > a:hover, .borderNone > li > a:focus{background:#f7f7f7; border-color:#f7f7f7; color:#111;}
 .borderNone > li > a{color:#525151; padding:14px 15px;}
 .borderNone span.or{position:absolute; z-index:99; left:50%; top:50%; margin-left:-15px; padding:3px 0; font-size:11px; margin-top:-15px; width:30px; height:30px; background:#f7333b; border:2px solid #fff; border-radius:100%; color:#fff; text-align:center;}
-.planTable{border:1px solid #ccc; box-shadow:0px 0px 10px #ccc; width:100%; text-align:center; padding:35px 20px; min-height:400px; position:relative; margin-bottom:20px;}
+.planTable{border:1px solid #ccc; box-shadow:0px 0px 10px #ccc; background:#fafafa; width:100%; text-align:center; padding:35px 20px; min-height:400px; position:relative; margin-bottom:20px;}
 .planTable:before{content: ""; position:absolute; top:0; height:2px; background:#f7333b; display:block; margin-left:-80px; left:50%; width:160px;}
 .planTable em{font-size:21px; font-style:normal; text-transform:uppercase;}
 .planTable h3{font-size:80px; color:#000; margin:55px 0;}
@@ -181,13 +181,15 @@ section.payAnually{margin:50px 0; text-align:center;}
 .selectHelp select{width:100%; padding:20px; border:2px solid #e7e7e7; border-radius:4px;}
 .selectHelp select option{padding:8px 20px; display:block;}
 section.payAnually h3{}
-.plansTable{width:100%; float:left; border:1px solid #222222; min-height:500px;}
-.PTable tr:first-child{background:#3e3e3e; color:#fff;}
+.plansTable{width:100%; float:left; border:1px solid #656565 ; min-height:500px;}
+.PTable thead tr:first-child{color:#fff;}
 .PTable tr:last-child{border-bottom:none;}
-.PTable tr:first-child td{font-size:21px; color:#fff;}
-.PTable tr td:first-child{text-align:left; width:25%;}
-.PTable tr{border:1px solid #222222;}
-.PTable tr td{border-right:1px solid #222222; width:15%; text-align:center;  padding:5px 18px; min-height:75px; height:75px; font-size:17px;}
+.PTable thead tr{background:#656565;}
+.PTable thead tr:first-child td{font-size:21px; color:#fff;}
+.PTable thead tr td:first-child{text-align:left;  width:25%;}
+.PTable tr td:first-child{text-align:left; color:#000;}
+.PTable tr{border:1px solid #656565 ;}
+.PTable tr td{border-right:1px solid #656565 ; color:#7b7b7b; width:15%; text-align:center;  padding:5px 18px; min-height:75px; height:75px; font-size:17px;}
 .td-right-border td:last-child{border:none;}
 tr.td-right-border {border-left:none; border-right:none;}
 .checkTableIcon{background:url(../images/click-icon.png) no-repeat center center; width:22px; height:16px; display:inline-block;}

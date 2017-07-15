@@ -18,8 +18,9 @@ Class Customer_M extends CI_Model {
 	unset($info['submit']);
 
 	$this->db->insert($this->table,$info);
-		
-	return true;
+	 $insert_id = $this->db->insert_id();
+	
+	return $insert_id;
 
 	}
 	

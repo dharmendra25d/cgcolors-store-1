@@ -47,6 +47,10 @@ ul.totalUSD li:nth-child(2n){font-size:23px;}
 ul.totalUSD li:nth-child(2n) em{font-size:13px; font-style:normal; padding-right:5px; color:#ff7c84 !important;}
 .reservedCSS{border-top:1px solid #ccc; padding:10px 0; margin:20px 0 0 0; }
 .reservedCSS p{font-size:13px; color:#999;}
+.cust_note{
+    width: 100%;
+    height: 100px;
+}
 @media screen and (max-width:767px){
 	.innercartBorder{padding:0; border:none;}
 	.innercartBorderRight{border-top:2px solid #ccc; border-radius:20px 0 0 0;}
@@ -103,24 +107,24 @@ if ($params['testmode'] == "on") {
 <div class="customerInformation">
  <form class="checoutForm" action="<?php echo base_url();?>checkout/c_submit" method="post">
   <h3>Customer information</h3>
-  <div class="marginArearight"><label class="Area100"><input type="email" name="email" value="<?php echo $user->email;?>" placeholder="Email" /></label></div>
+  <div class="marginArearight"><label class="Area100"><input type="email" name="email" value="<?php if(!empty($user->email)) echo $user->email; ?>" placeholder="Email" /></label></div>
   <label><input type="checkbox" /> Subscribe to our newsletter</label>
   <h3>Shipping address</h3>
   <div class="marginArearight">
-   <label class="halfArea"><input type="text" name="first_name" value="<?php if(!empty($user->fname)) echo $user->fname; else echo "First Name";?>" placeholder="First Name" /></label>
-   <label class="halfArea"><input type="text" name="last_name" value="<?php if(!empty($user->lname)) echo $user->lname; else echo "Lirst Name";?>" placeholder="Last Name" /></label>
+   <label class="halfArea"><input type="text" name="first_name" value="<?php if(!empty($user->fname)) echo $user->fname; ?>" placeholder="First Name" /></label>
+   <label class="halfArea"><input type="text" name="last_name" value="<?php if(!empty($user->lname)) echo $user->lname; ?>" placeholder="Last Name" /></label>
   </div>
   <div class="marginArearight">
-   <label class="halfArea Area70"><input type="text" name="address" value="<?php if(!empty($user->address)) echo $user->address; ?>" placeholder="Address" /></label>
-   <label class="halfArea Area31"><input type="text" name="street_address" value="<?php if(!empty($user->street_address)); echo $user->street_address;?>" placeholder="Apt, suite, etc. (optional)" /></label>
+   <label class="halfArea Area70"><input type="text" name="address" value="<?php if(!empty($user->address)) echo $user->address;  ?>" placeholder="Address" /></label>
+   <label class="halfArea Area31"><input type="text" name="street_address" value="<?php if(!empty($user->street_address)) echo $user->street_address;  ?>" placeholder="Apt, suite, etc. (optional)" /></label>
   </div>
-  <div class="marginArearight"><label class="Area100"><input type="text" name="city" value="<?php if(!empty($user->city)) echo $user->city; else echo "City";?>" placeholder="City" /></label></div>
+  <div class="marginArearight"><label class="Area100"><input type="text" name="city" value="<?php if(!empty($user->city)) echo $user->city; ?>" placeholder="City" /></label></div>
   <div class="marginArearight">
   <label class="halfArea Area32">
    <select id="countryId"  name="country">
    <option value="">Select Country</option>
 <?php foreach($countries as $country) { ?>
-<option <?php if($user->country==$country->id) echo "selected";?> value="<?php echo $country->id;?>"><?php echo $country->name;?></option>
+<option <?php if(!empty($user->country) && $user->country==$country->id) echo "selected";?> value="<?php echo $country->id;?>"><?php echo $country->name;?></option>
 <?php } ?>
    </select>
   </label>
@@ -130,40 +134,49 @@ if ($params['testmode'] == "on") {
    </select>
   </label>
     <label class="halfArea Area32">
-   <input type="text" name="zipcode" value="<?php if(!empty($user->zip_code)) echo $user->zip_code; else echo "Zip Code";?>" placeholder="Zip Code" /></label>
+   <input type="text" name="zipcode" value="<?php if(!empty($user->zip_code)) echo $user->zip_code; ?>" placeholder="Zip Code" /></label>
  </div>
   <div class="marginArearight"><label class="halfArea Area100"><input type="text" name="phone" value="<?php if(!empty($user->phone)) echo $user->phone; ?>" placeholder="Phone" /></label></div>
-<?php if(empty($this->session->userdata('theme')) && empty($this->session->userdata('addons'))) {  
-?>
+ <h3>Customer Note</h3>
+ <div class="marginArearight Area100"><label class="halfArea Area100"><textarea class="cust_note"  name="customer_note" /></textarea></label></div>
+<?php if($this->session->userdata('total')==0) { ?>
   <input type="hidden" name="total" value="<?php echo $this->session->userdata('plan_price'); ?>" />
-  <div class="marginArearight m-20">
-  <script
-    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-    data-key="<?php echo $params['public_test_key']; ?>"
-    data-amount="<?php echo $this->session->userdata('plan_price')*100; ?>"
-    data-name="Designomate"
-    data-image="http://designomate.com/coming-soon-logo.png"
-    data-locale="auto"
-	data-description="<?php echo $this->session->userdata('plan_name'); ?>"
-	data-panel-label="Subscribe"
-	data-label="Subscribe"
-    data-zip-code="true">
-  </script>
-<?php } else { ?>
- <input type="hidden" name="total" value="<?php echo $this->session->userdata('plan_price'); ?>" />
-  <div class="marginArearight m-20">
-  <script
-    src="https://checkout.stripe.com/checkout.js" class="stripe-button"
-    data-key="<?php echo $params['public_test_key']; ?>"
-    data-amount="<?php echo $this->session->userdata('total')*100; ?>"
-    data-name="Designomate"
-    data-image="http://designomate.com/coming-soon-logo.png"
-    data-locale="auto"
-	data-description="Themes/Addons"
-	
-    data-zip-code="true">
-  </script>
-<?php }?>
+    <div class="marginArearight m-20">
+	<button type="submit">Submit</button>
+<?php } else {
+
+		if(empty($this->session->userdata('theme')) && empty($this->session->userdata('addons'))) {  
+	?>
+	  <input type="hidden" name="total" value="<?php echo $this->session->userdata('plan_price'); ?>" />
+	  <div class="marginArearight m-20">
+	  <script
+		src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+		data-key="<?php echo $params['public_test_key']; ?>"
+		data-amount="<?php echo $this->session->userdata('plan_price')*100; ?>"
+		data-name="Designomate"
+		data-image="http://designomate.com/coming-soon-logo.png"
+		data-locale="auto"
+		data-description="<?php echo $this->session->userdata('plan_name'); ?>"
+		data-panel-label="Subscribe"
+		data-label="Subscribe"
+		data-zip-code="true">
+	  </script>
+	<?php } else { ?>
+	 <input type="hidden" name="total" value="<?php echo $this->session->userdata('plan_price'); ?>" />
+	  <div class="marginArearight m-20">
+	  <script
+		src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+		data-key="<?php echo $params['public_test_key']; ?>"
+		data-amount="<?php echo $this->session->userdata('total')*100; ?>"
+		data-name="Designomate"
+		data-image="http://designomate.com/coming-soon-logo.png"
+		data-locale="auto"
+		data-description="Themes/Addons"
+		
+		data-zip-code="true">
+	  </script>
+	<?php } 
+}?>
    <a href="" class="returnShop">Return to cart</a>
   </div>
  </form>

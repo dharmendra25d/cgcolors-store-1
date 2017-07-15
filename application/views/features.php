@@ -1,4 +1,3 @@
-<?php include('header.php'); ?>
 <div class="topSpacingHeight"></div>
 <div class="BottomTopSpacing" id="plans">
 
@@ -141,4 +140,3 @@ from starting eCommerce business</h1>
 
 
 </div>
-<?php include('footer.php'); ?>

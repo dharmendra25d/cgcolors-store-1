@@ -12,6 +12,7 @@
     <label><input type="email" name="email" placeholder="Email" /></label>
 	<label><input type="text" name="password" placeholder="Password" /></label>
 	<a href="">Forget Password?</a>
+	<a href="<?php echo base_url();?>register">New User?</a>
 	 <input type="submit" name="submit" value="Log In" />
    </form>
    <div class="row rememberCl">
