@@ -102,7 +102,7 @@ if ($params['testmode'] == "on") {
   <div class="innercartBorder">
 <ul class="breadcrumb">
 <h3>E-commerce</h3>
- <li><a href="faq.php">Cart</a></li>        <li>Customer information</li>         <li>Shipping method</li>         <li>Payment method</li>
+ <li><a href="<?php echo base_url();?>cart">Cart</a></li>        <li>Customer information</li>         <li>Shipping method</li>         <li>Payment method</li>
 </ul>
 <div class="customerInformation">
  <form class="checoutForm" action="<?php echo base_url();?>checkout/c_submit" method="post">

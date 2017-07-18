@@ -14,7 +14,7 @@
 <div class="innerIT">
  <div class="containerFIx-80">
    <div class="row">
-    <div class="col-md-4 col-sm-4"><div class="mainLogo"><h1>Logo</h1></div></div>
+    <div class="col-md-4 col-sm-4"><div class="mainLogo"><img src="<?php echo base_url();?>assets/images/coming-soon-logo.png"></div></div>
 	<div class="col-md-8 col-sm-8">
 	<div class="socialNo">
 	 <ul>

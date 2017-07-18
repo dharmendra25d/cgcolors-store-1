@@ -104,7 +104,12 @@ from starting eCommerce business</h1>
 		 <h3><i>$</i><?php echo $plan->plan_price;?><i class="timeM-Y">/mo</i></h3>
 		 <?php } ?>
 		 <p><?php echo $plan->plan_desc;?></p>
+		 <?php if($plan->id==4)  { ?>
+		 <a href="<?php echo base_url();?>custom_design">BUY NOW!</a>
+
+		<?php } else { ?>
 <a href="plans/buynow?p=<?php echo $plan->id;?>&pr=<?php echo $plan->plan_price;?>">BUY NOW!</a>
+		<?php } ?>
 		</div>
 	   </div>
 	  <?php } ?>
@@ -119,7 +124,12 @@ from starting eCommerce business</h1>
 		 <em><?php echo $plan->plan_name;?> </em>
 		 <h3><i>$</i><?php echo $plan->plan_price;?><i class="timeM-Y">/yearly</i></h3>
 		 <p><?php echo $plan->plan_desc;?></p>
-<a href="plans/buynow?p=Boundless&pr=200">BUY NOW!</a>
+		 <?php if($plan->id==4)  { ?>
+		 <a href="<?php echo base_url();?>custom_design">BUY NOW!</a>
+
+		<?php } else { ?>
+<a href="plans/buynow?p=<?php echo $plan->id;?>&pr=<?php echo $plan->plan_price;?>">BUY NOW!</a>
+		<?php } ?>
 		</div>
 	   </div>
 	  <?php } ?>

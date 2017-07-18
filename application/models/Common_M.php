@@ -22,4 +22,19 @@ Class Common_M extends CI_Model {
 		}
 
 	}
+	
+	public function add_queries($info) {
+
+	/* $this->db->select('address_id');
+	$query = $this->db->get_where($this->table, array("invoice_id"=>$info['id']));
+	$aid = ($query->row()->address_id); */
+	unset($info['submit']);
+
+	$this->db->insert('custom_design_queries',$info);
+	 $insert_id = $this->db->insert_id();
+	
+	return $insert_id;
+
+	}
+	
 }

@@ -68,8 +68,11 @@ Class Plans_M extends CI_Model {
 	$query = $this->db->get('user_plans');
 	
 	$plans = ($query->row());
-	
+	if(!empty($plans->plan_id)) {
 	return $plans->plan_id;
+	} else {
+	return false;
+	}
 	//return $plans;
 
 	} 
