@@ -4,8 +4,11 @@
   <div class="container m-top-80">
      <div class="themeDesignAdded">
     <div class="row">
-	 <div class="col-md-9 col-sm-9"><p>"Theme design" has been added to your cart</p></div>
-	 <div class="col-md-3 col-sm-3"><a href="#">Continue shopping</a></div>
+
+	 <div class="col-md-9 col-sm-9"><p id="msg">		     <?php if(!empty($this->session->userdata('plan_name')) || !empty($this->session->userdata('addons')) || !empty($this->session->userdata('theme'))) {  ?>
+Your items has been added to your cart  <?php } ?></p></div>
+			
+	 <div class="col-md-3 col-sm-3"><a href="<?php echo base_url();?>/themes/addons">Back</a></div>
 	</div>
    </div>
    <div class="plansTable plansTableCart">
@@ -22,7 +25,7 @@
 	  <tr class="td-right-border bgPlus-relative">
 	   <td><a href="#" class="delete-plan" data-plan="<?php echo $this->session->userdata('plan_name');?>" >x</a></td>
 	   <td style="width:15%;"><a href=""><img src="images/them.jpg" alt="" /></a></td>
-	   <td style="text-align:left;"><a href=""> <?php echo $this->session->userdata('plan_name'); ?></a></td>
+	   <td style="text-align:left;"><a href="<?php echo base_url();?>plans"> <?php echo $this->session->userdata('plan_name'); ?></a></td>
 	   <td style="width:10%;">$<?php echo $this->session->userdata('plan_price'); ?></td>
 	  </tr>
 	  <?php } ?>
@@ -30,8 +33,8 @@
 	  <?php if(!empty($this->session->userdata('theme'))) {   $price = (float)($this->session->userdata('theme_price')); $amt=$amt+$price; ?>
 	  <tr class="td-right-border bgPlus-relative">
 	   <td><a class="delete-theme" data-plan="<?php echo $this->session->userdata('theme');?>" href="#">x</a></td>
-	   <td style="width:15%;"><a href=""><img src="images/them.jpg" alt="" /></a></td>
-	   <td style="text-align:left;"><a href=""> <?php echo $this->session->userdata('theme'); ?></a></td>
+	   <td style="width:15%;"><a href=""><img src="<?php echo $this->session->userdata('theme_image');?>" alt="" /></a></td>
+	   <td style="text-align:left;"><a href="<?php echo base_url();?>themes"> <?php echo $this->session->userdata('theme'); ?></a></td>
 	   <td style="width:10%;">$<?php echo $this->session->userdata('theme_price'); ?></td>
 	  </tr>
 	  <?php } 
@@ -48,11 +51,11 @@
 	  $price = (float)($addon->addon_price.".00");
 
 	  $amt=$amt+$price; }
-	     $mykey = ($keys[$c]);?>
+	     $mykey = ($keys[$c]);  ?>
 	  <tr class="td-right-border bgPlus-relative">
 	   <td><a class="delete-addons" data-plan="<?php echo $mykey; ?>" href="#">x</a></td>
-	   <td style="width:15%;"><a href=""><img src="images/them.jpg" alt="" /></a></td>
-	   <td style="text-align:left;"><a href=""> <?php echo $addon->addon_name; ?></a></td>
+	   <td style="width:15%;"><a href=""><img src="<?php echo $addon->addon_image_link;?>" alt="" /></a></td>
+	   <td style="text-align:left;"><a href="<?php echo base_url();?>themes/addons"> <?php echo $addon->addon_name; ?></a></td>
 	   <td style="width:10%;"><?php if($addon->addon_price=='Free') echo "Free"; else echo "$".$addon->addon_price; ?></td>
 	  </tr>
 	  
@@ -63,7 +66,7 @@
 	 </tbody> 
 	</table>
 		  
-	     <?php if(empty($this->session->userdata('plan_name')) && empty($this->session->userdata('addons')) && empty($this->session->userdata('theme'))) { ?>
+	     <?php if(empty($this->session->userdata('plan_name')) && empty($this->session->userdata('addons')) && empty($this->session->userdata('theme'))) { $disabled="disabled"; ?>
 		   <div class="row">
 	 <div class="col-md-12 col-sm-12"><p style="text-align:center">Your Cart is Empty</p></div>
 	</div>	  
@@ -77,16 +80,23 @@
 	</ul>
 	<p>Shipping & calculated at checkout</p>
 	<ul class="update-checkout">
-	 <li><a href="#">Update</a></li>
-	 <li><a href="<?php echo base_url();?>checkout">CHECK OUT</a></li>
+	 <!--<li><a href="#">Update</a></li>-->
+	 <li ><a class="<?php if(!empty($disabled)) echo $disabled;?>" href="<?php echo base_url();?>checkout">CHECK OUT</a></li>
 	</ul>
-	<img src="images/Paypal.jpg" alt="" class="paypalImg" />
+	<!--<img src="images/Paypal.jpg" alt="" class="paypalImg" />-->
   </div>
   </div>
 </section>
 
 
 </div>
+<style>
+.disabled {
+		pointer-events: none;
+       cursor: default;
+	   opacity: 0.65; 
+	   }
+</style>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <script>
@@ -101,6 +111,7 @@ if(confirm("Are You sure want to remove it?")) {
          cache:false,
          success: 
               function(data){
+			sessionStorage.reloadAfterPageLoad = true;
             location.reload();
 				
               }
@@ -119,6 +130,7 @@ if(confirm("Are You sure want to remove it?")) {
          cache:false,
          success: 
               function(data){
+			sessionStorage.reloadAfterPageLoad = true;
             location.reload();
 				
               }
@@ -137,10 +149,23 @@ if(confirm("Are You sure want to remove it?")) {
          cache:false,
          success: 
               function(data){
+			sessionStorage.reloadAfterPageLoad = true;
+			
+sessionStorage.setItem('test',"false"); 
+
             location.reload();
 				
               }
           });
 } 
 });
+$( function () {
+	if (sessionStorage.getItem('test') == "false") {
+  	$("#msg").html("Your items has been deleted from cart");
+	sessionStorage.setItem('test',"true"); 
+
+}
+   
+} )
+
 </script>

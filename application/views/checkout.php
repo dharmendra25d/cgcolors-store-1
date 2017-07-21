@@ -177,7 +177,7 @@ if ($params['testmode'] == "on") {
 	  </script>
 	<?php } 
 }?>
-   <a href="" class="returnShop">Return to cart</a>
+   <a href="<?php echo base_url();?>/cart" class="returnShop">Return to cart</a>
   </div>
  </form>
 </div>

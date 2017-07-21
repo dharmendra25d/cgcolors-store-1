@@ -47,6 +47,7 @@ class Themes extends CI_Controller {
 		$this->session->set_userdata(array(
                             'theme'       => $theme->theme_name,
                             'theme_price'      => $theme->theme_price,
+							'theme_image'      => $theme->theme_screenshot_link,
 							'theme_id'          =>$theme_id,
 						     'status'        => TRUE
                     ));

@@ -3,6 +3,7 @@
 <form method="post" action="add_continue">
 <section class="contentPart">
  <div class="containerFIx-80">
+ <a href="<?php echo base_url();?>themes">Back</a>
  <input type="submit" name="submit" value="Continue">
    <div class="aMazingStore">
     <em>Welcome</em>
@@ -22,7 +23,7 @@
 	<h4><?php echo $addon->addon_name;?></h4>
 	<em><?php echo $addon->addon_price;?> </em>
 	<p><?php echo $addon->addon_desc;?></p>
-	<label><input type="checkbox" name="addons_items[]" value="<?php echo $addon->id;?>">Add This Feature</label>
+	<label><input type="checkbox" <?php if(check_cart_addons($addon->id)) {echo "checked";};?> name="addons_items[]" value="<?php echo $addon->id;?>">Add This Feature</label>
 	</li>
    <?php } ?>
 	

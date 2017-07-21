@@ -20,11 +20,16 @@ class Custom_design extends CI_Controller {
 	 */
 	public function index()
 	{
+		 $this->load->library('user_agent');  // load user agent library
+
+    //Set session for the referrer url
+    $this->session->set_userdata('referrer_url', $this->agent->referrer() );  
 		if(!empty($this->session->userdata('user_id'))) {
        	$d['v'] = 'custom-design';
 		
 		$this->load->view('template', $d);
 		} else {
+			
 			redirect('login');
 		}
 	}
@@ -33,7 +38,7 @@ class Custom_design extends CI_Controller {
 	{
 		
 		$this->load->model('Common_M');
-			$this->load->model('Customer_M');
+		$this->load->model('Customer_M');
 		$this->load->library('form_validation');
 				$this->form_validation->set_rules('question1','', 'required');
                 $this->form_validation->set_rules('question2', 'required');

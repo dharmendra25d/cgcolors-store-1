@@ -194,7 +194,7 @@ from starting eCommerce business</h1>
   </div>
 </section>
 
-  <section class="designComponent">
+  <!--<section class="designComponent">
   <div class="container">
    <div class="CenterTXT"><h2>Regular Design Components</h2>
    <p>Mix and match a variety of Regular Design Components to create a consistent look and feel across your ecommerce website.</p></div>
@@ -279,5 +279,5 @@ from starting eCommerce business</h1>
 
 <p>It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum. </p></div>
   </div>
-  </section>
+  </section>-->
 </div>

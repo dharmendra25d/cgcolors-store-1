@@ -22,7 +22,6 @@ Stores for Free on BigCommerce</h1>
     <div class="curveOne"><h2>Pick Amazing Theme or Request Custom Design</h2></div>
 	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
 	when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, </p>
-	<a href="#" class="taRgetLink">Click Here!</a>
 	</div>
    </div>
    <div class="col-md-5">
@@ -45,7 +44,6 @@ Stores for Free on BigCommerce</h1>
     <div class="curveTwo"><h2>Select Features you love</h2></div>
 	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
 	when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, </p>
-	<a href="#" class="taRgetLink">Click Here!</a>
 	</div>
    </div>
   
@@ -60,7 +58,6 @@ Stores for Free on BigCommerce</h1>
     <div class="curveThree"><h2>Make the Payment</h2></div>
 	<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, 
 	when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, </p>
-	<a href="#" class="taRgetLink">Click Here!</a>
 	</div>
    </div>
    <div class="col-md-5">

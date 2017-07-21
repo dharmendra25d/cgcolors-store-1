@@ -12,5 +12,21 @@ if ( ! function_exists('getstatebyid'))
 		$state = ($query->row()->name);
 	
 		return $state;
-    }   
+    }  
+function check_cart_addons($addons_id) {
+		$ci=& get_instance();
+ if(!empty($ci->session->userdata('addons'))) {
+
+		$addons=$ci->session->userdata('addons');
+		
+			   foreach($addons as $addon) { 
+				   if($addon->id==$addons_id) {
+				   
+						return true;
+				   }
+			   }
+  }	else {
+	return false;
+  }
+}
 }

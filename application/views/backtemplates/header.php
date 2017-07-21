@@ -64,7 +64,7 @@
                 
                   <li><a><i class="fa fa-table"></i> Themes <span class="fa fa-chevron-down"></span></a>
                     <ul class="nav child_menu">
-                      <li><a href="<?php echo base_url();?>themes">Add New</a></li>
+                     <!-- <li><a href="<?php echo base_url();?>themes">Add New</a></li>-->
                       <li><a href="<?php echo base_url();?>themes/themes_list">Themes List</a></li>
                     </ul>
                   </li>
