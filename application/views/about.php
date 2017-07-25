@@ -3,7 +3,7 @@
 <section class="contentPart">
  <div class="containerFIx-80">
    <div class="aMazingStore">
-    <em>Welcome</em>
+    <em>Welcome tttttttttttttttt</em>
 	<h1>about us</h1>
 </div>
 </div>
